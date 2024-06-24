@@ -1,0 +1,36 @@
+Structures (also called structs) are a way to group several related variables into one place. Each variable in the structure is known as a member of the structure.
+Unlike an array, a structure can contain many different data types (int, float, char, etc.).
+
+#include <stdio.h>
+#include <string.h>
+
+struct Student {
+    char name[50];
+    int rollNumber;
+    float marks;
+};
+
+int main() {
+    struct Student student1;
+
+    printf("Enter student name: ");
+    fgets(student1.name, sizeof(student1.name), stdin);
+
+    int len = strlen(student1.name);
+    if (len > 0 && student1.name[len-1] == '\n') {
+        student1.name[len-1] = '\0';
+    }
+
+    printf("Enter roll number: ");
+    scanf("%d", &student1.rollNumber);
+
+    printf("Enter marks: ");
+    scanf("%f", &student1.marks);
+
+    printf("\nStudent Information:\n");
+    printf("Name: %s\n", student1.name);
+    printf("Roll Number: %d\n", student1.rollNumber);
+    printf("Marks: %.2f\n", student1.marks);
+
+    return 0;
+}

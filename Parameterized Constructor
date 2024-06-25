@@ -1,0 +1,25 @@
+#include <iostream>
+
+class Reactangle{   // create class 
+    private: 
+        double len;
+        double wid;
+    
+    public:
+        Reactangle(double l, double w){ // parameterized constructor 
+            len = l;
+            wid = w;
+        }
+    double area(){     // function for getting area 
+        return len * wid;
+    }
+};
+int main()
+{
+    Reactangle rec(4.0,5.0); // give arugment 
+    
+   double result =  rec.area(); // call the function and get the value in result
+   std::cout <<"Area is : "<< result << std::endl;
+
+    return 0;
+}

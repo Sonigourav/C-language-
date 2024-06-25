@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+struct Student{
+    char name[50];
+    int age;
+    int marks;
+};
+
+void printStruct(struct Student s){
+    printf("Student Name %s\n",s.name);
+    printf("Student Age %d\n",s.age);
+    printf("Student Marks %d",s.marks);    
+}
+int main()
+{
+  struct Student s1 = {"gourav",23,89};
+  
+  printStruct(s1);
+
+    return 0;
+}

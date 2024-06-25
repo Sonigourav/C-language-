@@ -1,0 +1,16 @@
+#include<iostream>
+using namespace std;
+
+void printArray(int *arr, int s){ // function to print array takes arrgument pointer
+    for(int i=0;i<s;i++){        // for loop for print
+        std::cout << arr[i] << std::endl;
+    }
+}
+
+int main(){
+    
+    int array[] = {10,20,30,40,50};
+    int size = sizeof(array)/sizeof(array[0]); // this is to find the size of array (sizeof-> it gives us bytes)
+    std::cout << "Print Array" << std::endl;
+    printArray(array, size); // call the function
+}

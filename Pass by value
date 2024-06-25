@@ -1,0 +1,19 @@
+#include <iostream>
+using namespace std;
+
+int addten(int n){
+     n += 10;
+    std::cout << "After addten in num : " <<n<< std::endl;
+}
+
+int main() {
+    
+    int num = 5;
+    
+    std::cout << "Before addten in num : " <<num<< std::endl;
+    
+     addten(num);
+    
+    
+    return 0;
+}

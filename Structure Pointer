@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include<stdlib.h>
+
+struct Rectangle{
+    int length;
+    int width;
+};
+
+
+int main()
+{
+    struct Rectangle *ptrRec;
+    
+    ptrRec = (struct Rectangle *)malloc(sizeof(struct Rectangle));
+    
+    if(ptrRec == NULL){
+        return -1;
+    }
+    
+    ptrRec -> length = 10;
+    ptrRec -> width = 20;
+    
+    printf("Lenght is %d\n",ptrRec->length);
+    printf("width is %d",ptrRec->width);
+
+    return 0;
+}

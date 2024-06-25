@@ -1,0 +1,13 @@
+#include <stdio.h>
+
+int main()
+{
+    int x = 10;
+    int *ptr = &x;
+    int **ptr1 = &ptr;
+    
+    printf("Single Pointer value %d\n",*ptr);
+    printf("Pointer to Pointer value %d",**ptr1);
+
+    return 0;
+}

@@ -1,0 +1,21 @@
+#include<iostream>
+using namespace std;
+
+const int SIZE = 5; // constant value of SIZE variable
+int main(){
+    
+    int *ptrArr[SIZE];  // crate a pointer array
+    
+    int v1 = 5, v2=10,v3=15,v4=20,v5=25;
+    
+    ptrArr[0] = &v1;  // give pointer array adress of v1 to v5 for 0 to 4 index
+    ptrArr[1] = &v2;
+    ptrArr[2] = &v3;
+    ptrArr[3] = &v4;
+    ptrArr[4] = &v5;
+    
+    for(int i=0;i<5;i++){   // for loop for printing value
+        std::cout <<"Array pointer values " <<*ptrArr[i] << std::endl;
+    }
+}
+

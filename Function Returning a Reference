@@ -1,0 +1,18 @@
+#include <iostream>
+using namespace std;
+
+int& staticVar(){
+     static int X = 0;
+     
+     return X;
+}
+
+int main() {
+     std::cout <<" before change static value : " <<staticVar() << std::endl;
+    int &refStat = staticVar();
+    
+    refStat = 5;
+    
+    std::cout <<"change static value : " <<staticVar() << std::endl;
+    return 0;
+}

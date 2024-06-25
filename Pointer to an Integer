@@ -1,0 +1,18 @@
+#include <iostream>
+
+int Increment(int *ptr){ // function for increment
+    return (*ptr)++;
+}
+int main()
+{
+  int num = 10;
+  
+  std::cout << "Before Increment : "<< num;
+  
+  Increment(&num); // call the function
+  
+  std::cout << "  After Increment : "<< num;
+  
+  
+    return 0;
+}

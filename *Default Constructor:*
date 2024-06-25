@@ -1,0 +1,24 @@
+#include <iostream>
+#include<string>
+using namespace std;
+class Student{ //create a class name Student 
+    private: 
+        string name;  
+        int age ;
+    public :     
+        Student(){       //default constructor
+        name = "Unknown";
+        age = 0;
+    }
+    void display(){     // method to display the details 
+        std::cout << "Name : " <<name<<"  " <<  "Age :  "<<age<< std::endl;
+    }
+};
+int main()
+{
+    Student s;
+    
+    s.display(); // calling the function in class to display the details  
+
+    return 0;
+}

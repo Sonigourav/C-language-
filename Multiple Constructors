@@ -1,0 +1,29 @@
+#include <iostream>
+#include <string>
+using namespace std;
+class Book{    // create class 
+  private: 
+        string title ;
+        int pages;
+    public :
+        Book(){       // default constructor
+            title = "Unknown";
+            pages = 0;
+        }
+        Book(string n, int p){   // parameterized constructor
+            title = n;
+            pages = p;
+        }
+        void display(){   // display the title and pages
+            std::cout <<"Title : "<< title <<" Pages : "<<pages<< std::endl;
+        }   
+};
+int main()
+{
+    Book b1; // create instance 
+    b1.display();  // call function
+    Book b2("Gourav", 89); //create another instance with argument
+    b2.display(); // call function
+
+    return 0;
+}

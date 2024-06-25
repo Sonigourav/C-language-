@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+
+class Box{
+    private : 
+        double len;
+        double wid;
+        double hei;
+    public : 
+    
+        Box(double l, double w, double h){
+            len = l;
+            wid = w;
+            hei = h;
+            
+        }
+        double volume(){
+            return len * wid * hei;
+        }
+};
+
+int main() {
+    
+    Box b1(3.0,5.0,6.0);
+    
+    Box& boxRef = b1;
+    
+    double vol = boxRef.volume();
+    std::cout <<"Volume of box is : "<< vol << std::endl;
+    
+    return 0;
+}

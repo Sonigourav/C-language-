@@ -1,0 +1,19 @@
+Code :
+#include <iostream>
+class Circle{  // create class 
+    private:
+        double radius ;
+    public : 
+        Circle(double r) {   // parameterized constructor
+        radius = r;
+    }
+    double area() {   // function for getting area of circle 
+        return 3.14 * radius * radius;  // 3.14 is pi value 
+    }     
+};
+int main() {
+    Circle *circlePointer; // create a pointer instance of class
+    circlePointer = new Circle(5.0); // memory allocation
+    double circleArea = circlePointer->area(); // call function and take value in circleArea variable    std::cout << "The area of the circle with radius " << circlePointer->area() << " is " << circleArea;
+    return 0;
+}

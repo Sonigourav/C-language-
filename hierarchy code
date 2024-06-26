@@ -1,0 +1,107 @@
+#include<iostream>
+#include<string>
+#include<vector>
+
+using namespace std;
+
+class Person{                   // create a class person
+    protected :                 // protected variable of class person
+        string name;
+        int id;
+    
+    public:
+        Person(string n, int i){ // parameterized constructor for getiing name and id 
+            name = n;
+            id = i;
+        }
+        
+        string getname(){       // function for getting name 
+            return name;
+        }
+        int getid(){         // function for getting id 
+            return id;
+        }
+};
+
+class Student : public Person{ // create another class name student this class inherits Person class
+    protected :                 // protected varialbe for this class
+        string major;
+        double gpa;
+    public:
+        Student(string n, int i, string m, double  g):Person(name, id){ //constructor for this class also inherits the parent class constructor
+            name = n;
+            id = i;
+            major = m;
+            gpa = g;
+        }
+        
+        double calculateGpa(vector<double>grades){   // this function for calculate GPA
+            
+            double total = 0.0;
+                for (size_t i = 0; i < grades.size(); ++i) { // by this for loop
+                        total += grades[i];
+                }
+                    return total / grades.size();
+        }
+        string getmajor(){    // function for getting major 
+            return major;
+        }
+        double getgpa(){     // function for getting gpa 
+            return gpa;
+        }
+};
+
+class Faculty : public Person{  // create another class name faculty this class inherits Person class
+    protected:
+        string department;
+        string title;
+    public: 
+         Faculty(string n, int  i, string d, string t):Person(name, id){   //constructor for this class also inherits the parent class constructor
+            name = n;
+            id = i;
+            department = d;
+            title = t;
+        }
+        
+        void teachCourse( string courseName) {
+        cout << name << " is now teaching " << courseName << " in the " << department << " department." << endl;
+    }
+        string getdepartment(){  // function for getting department 
+            return department;
+        }
+        string gettitle(){    // function for getting title 
+            return title;
+        }
+};
+
+int main(){
+    
+    Student s1("Gourav", 23, "CS", 3.5);   // student object pass argument
+    Faculty f1("Anubhav", 24, "CS", "Teacher"); //// Faculty object pass argument
+    
+    vector<double> grades = { 3.5, 4.0, 3.7, 3.9 };  //this is vector double Array 
+    double semesterGPA = s1.calculateGpa(grades);   // create variable for getting calculateGpa value 
+    
+    cout << s1.getname() << "'s GPA: " << s1.getgpa() << endl;
+    cout << "Semester GPA: " << semesterGPA << endl;
+
+    f1.teachCourse("Advanced Algorithms"); // pass the courseName as arguments
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,90 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Person {
+protected:
+    string name;
+    int age;
+
+public:
+
+    Person(string n, int a) : name(n), age(a) {}
+
+    virtual void getDetails() const {
+        cout << "Name: " << name << ", Age: " << age;
+    }
+};
+
+class ResearchAssistant : public Person {
+protected:
+    string researchArea;
+    string supervisor;
+
+public:
+    ResearchAssistant(string n, int a, string area, string sup)
+        : Person(n, a), researchArea(area), supervisor(sup) {}
+
+    void setResearchArea(string area) {
+        researchArea = area;
+    }
+
+    void setSupervisor(string sup) {
+        supervisor = sup;
+    }
+
+    // Getters
+    string getResearchArea() const {
+        return researchArea;
+    }
+
+    string getSupervisor() const {
+        return supervisor;
+    }
+
+    void getDetails() const override {
+        Person::getDetails();
+        cout << ", Research Area: " << researchArea << ", Supervisor: " << supervisor << endl;
+    }
+};
+
+class GraduateStudentTA : public ResearchAssistant {
+private:
+    string major;
+    int studentId;
+
+public:
+    GraduateStudentTA(string n, int a, string area, string sup, string m, int id)
+        : ResearchAssistant(n, a, area, sup), major(m), studentId(id) {}
+
+    void setMajor(string m) {
+        major = m;
+    }
+
+    void setStudentId(int id) {
+        studentId = id;
+    }
+
+    string getMajor() const {
+        return major;
+    }
+
+    int getStudentId() const {
+        return studentId;
+    }
+
+    void getDetails() const override {
+        ResearchAssistant::getDetails();
+        cout << "Student ID: " << studentId << ", Major: " << major << endl;
+    }
+};
+
+
+int main() {
+    GraduateStudentTA gsta("Nithya", 25, "Machine Learning", "Dr. Swapnana", "Computer Science", 2001);
+
+    cout << "Graduate Student TA Details:" << endl;
+    gsta.getDetails();
+
+    return 0;
+}

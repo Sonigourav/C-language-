@@ -15,7 +15,7 @@ class Person{
         }
        
 };
-class Student : public Person{
+class Faculty : public Person{
     public :
          void getDetails(){
             std::cout << "Student major : "<< major << std::endl;
@@ -25,7 +25,7 @@ class Student : public Person{
 
 int main()
 {
-    Student s1;
+    Faculty s1;
     s1.setmajor("Coding", 21);
     s1.getmajor();
     std::cout << "Student Details " << std::endl;

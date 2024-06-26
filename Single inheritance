@@ -1,0 +1,27 @@
+#include <iostream>
+#include <string>
+using namespace std;
+class Person{
+    public : 
+        string name ;
+        int age ;
+    void getDetails(string n, int a){
+        name = n;
+        age = a;
+        std::cout << "name is : "<< name << std::endl;
+        std::cout << "age is : "<< age  << std::endl;
+    }
+};
+class Student : public Person{
+    public : 
+        int studentID = 10;
+};
+
+int main()
+{
+    Student s1;
+    s1.getDetails("gourav ", 23);
+    std::cout << s1.studentID << std::endl;
+
+    return 0;
+}

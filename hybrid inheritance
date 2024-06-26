@@ -1,0 +1,108 @@
+#include <string>
+#include <vector>
+using namespace std;
+
+
+class Person {
+protected:
+    string name;
+    int age;
+
+public:
+    Person(string n, int a) : name(n), age(a) {}
+    virtual void getDetails() const {
+       std :: cout << "Name: " << name << ", Age: " << age;
+    }
+};
+
+class Student : public Person {
+protected:
+    int studentId;
+    string major;
+
+public:
+    Student(string n, int a, int id, string m)
+        : Person(n, a), studentId(id), major(m) {}
+
+    void setMajor(string m) {
+        major = m;
+    }
+
+    string getMajor() const {
+        return major;
+    }
+
+    void getDetails() const override {
+        Person::getDetails();
+        cout << ", Student ID: " << studentId << ", Major: " << major;
+    }
+};
+
+class TeachingAssistant : public Person {
+protected:
+    vector<string> coursesTeaching;
+
+public:
+    TeachingAssistant(string n, int a, vector<string> courses)
+        : Person(n, a), coursesTeaching(courses) {}
+
+    void setCoursesTeaching(vector<string> courses) {
+        coursesTeaching = courses;
+    }
+
+    vector<string> getCoursesTeaching() const {
+        return coursesTeaching;
+    }
+    void getDetails() const override {
+        Person::getDetails();
+        cout << ", Courses Teaching:";
+        for (const string &course : coursesTeaching) {
+            cout << " " << course;
+        }
+    }
+};
+
+class GraduateStudentTA : public Student, public TeachingAssistant {
+private:
+    string researchArea;
+    string supervisor;
+
+public:
+    GraduateStudentTA(string n, int a, int id, string m, vector<string> courses, string area, string sup)
+        : Student(n, a, id, m), TeachingAssistant(n, a, courses), researchArea(area), supervisor(sup) {}
+
+
+    void setResearchArea(string area) {
+        researchArea = area;
+    }
+
+    void setSupervisor(string sup) {
+        supervisor = sup;
+    }
+
+    string getResearchArea() const {
+        return researchArea;
+    }
+
+    string getSupervisor() const {
+        return supervisor;
+    }
+
+    void getDetails() const override {
+        Student::getDetails();
+        cout << ", Research Area: " << researchArea << ", Supervisor: " << supervisor;
+        TeachingAssistant::getDetails();
+        cout << endl;
+    }
+};
+
+int main() {
+
+    vector<string> courses = {"CS101", "CS102"};
+    GraduateStudentTA gsta("preethi", 25, 2001, "Computer Science", courses, "Machine Learning", "Dr. Smith");
+
+    cout << "Graduate Student TA Details:" << endl;
+    gsta.getDetails();
+
+    return 0;
+}

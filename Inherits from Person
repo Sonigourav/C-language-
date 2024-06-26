@@ -1,0 +1,36 @@
+#include <iostream>
+#include <string>
+using namespace std;
+class Person{
+     public :  
+        string major ;
+        int studentID ;
+   
+        void setmajor(string m, int id){
+            major = m;
+            studentID = id;
+        }
+        void getmajor(){
+            std::cout << "Studend Major is : "<< major << std::endl;
+        }
+       
+};
+class Student : public Person{
+    public :
+         void getDetails(){
+            std::cout << "Student major : "<< major << std::endl;
+            std::cout << "Student ID is : " << studentID<< std::endl;
+        }
+};
+
+int main()
+{
+    Student s1;
+    s1.setmajor("Coding", 21);
+    s1.getmajor();
+    std::cout << "Student Details " << std::endl;
+    s1.getDetails();
+    // std::cout << s1.studentID << std::endl;
+
+    return 0;
+}

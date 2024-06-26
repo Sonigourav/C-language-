@@ -1,0 +1,52 @@
+#include <iostream>
+#include <string>
+using namespace std;
+class Person{
+     public :  
+        string department  ;
+        int employeeId  ;
+   
+        void setdepartment(string d, int id){
+            department = d;
+            employeeId = id;
+        }
+        void getdepartment(){
+            std::cout << "Employee department is : "<< department << std::endl;
+        }
+       
+};
+class Faculty : public Person{
+    public :
+         void getDetails(){
+            std::cout << "Employee department is : "<< department << std::endl;
+            std::cout << "Employee ID is : " << employeeId<< std::endl;
+        }
+};
+class TeachingAssisment : public Faculty{
+        public :
+         void getDetails(){
+            std::cout << "Employee department is : "<< department << std::endl;
+            std::cout << "Employee ID is : " << employeeId<< std::endl;
+        }
+    
+};
+
+int main()
+{
+    Faculty s1;
+    TeachingAssisment t1;
+     std::cout << "Faculty Check Details " << std::endl;
+    s1.setdepartment("IT", 21);
+    s1.getdepartment();
+    s1.getDetails();
+     std::cout << "TeachingAssisment Check Details " << std::endl;
+     t1.setdepartment("HR", 22);
+     t1.getdepartment();
+     t1.getDetails();
+    
+    
+    
+    // std::cout << s1.studentID << std::endl;
+
+    return 0;
+}

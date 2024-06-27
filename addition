@@ -1,0 +1,28 @@
+
+
+#include <iostream>
+class Add{
+    private :
+        int a;
+        int b;
+    public :
+        Add(int x, int y){
+            a=x;
+            b=y;
+        }
+        
+        int add(){
+            return  a + b;
+        }
+        void printRe(){
+            int re = add();
+            std::cout << "Result is : "<<re << std::endl;
+        }
+};
+int main()
+{
+    Add a1(7,5);
+    a1.printRe();
+
+    return 0;
+}

@@ -1,0 +1,46 @@
+#include <iostream>
+using namespace std;
+class Complex{    // create class 
+  private: 
+        double real ;
+        double imaginary;
+    public :
+        Complex(){       // default constructor
+           real = 0.0;
+           imaginary = 0.0;
+        }
+        Complex(double r, double i){   // parameterized constructor
+            real = r;
+            imaginary = i;
+        }
+        Complex operator+(const Complex& other) const {
+        return Complex(real + other.real, imaginary + other.imaginary);
+        }
+        Complex operator-(const Complex& other) const {
+        return Complex(real - other.real, imaginary - other.imaginary);
+        }
+        Complex operator*(const Complex& other) const {
+        return Complex(real * other.real, imaginary * other.imaginary);
+        }
+        
+         friend std::ostream& operator<<(std::ostream& os, const Complex& complex);
+};
+std::ostream& operator<<(std::ostream& os, const Complex& complex) {
+    os << complex.real << " + " << complex.imaginary << "i";
+    return os;
+}
+int main()
+{
+    Complex c1(3.5,3.0); // create instance 
+    Complex c2(2.5, -1.5); //create another instance with argument
+    
+    Complex sum = c1 + c2;
+    std::cout << "Sum: " << sum << std::endl;
+    
+    Complex sub = c1 - c2;
+    std::cout << "Sub: " << sub << std::endl;
+    
+    Complex mult = c1 * c2;
+    std::cout << "Multiply: " << mult << std::endl;
+    return 0;
+}

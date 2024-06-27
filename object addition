@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+// #include<math>
+
+typedef struct{
+    double real;
+    double image;
+}complex_t;
+
+complex_t*
+complex_add(complex_t *a, complex_t *b){
+    complex_t *c = malloc(sizeof(complex_t));
+    c->real=a->real + b->real;
+    c->image=a->image + b->image;
+    return c;
+}
+
+complex_t*
+complex_multiply(complex_t *a, complex_t *b){
+    complex_t *c = malloc(sizeof(complex_t));
+    c->real=a->real * b->real - a->image * b->image;
+    c->image=a->real * b->image + a->image * b->real;
+    return c;
+}
+
+void complex_free(complex_t *c){
+    free(c);
+}
+
+int main(){
+    complex_t num1 = {1.0,2.0};
+    complex_t num2 = {3.0,4.0};
+    
+    complex_t *result_add = complex_add(&num1,&num2);
+    complex_t *result_multiply = complex_multiply(&num1,&num2);
+    
+    printf("Sum: %.2f + %.2fi\n", result_add->real, result_add->image);
+  printf("Product: %.2f + %.2fi\n", result_multiply->real, result_multiply->image);
+  
+  complex_free(result_add);
+  complex_free(result_multiply);
+  
+  return 0;
+  
+  
+  
+}

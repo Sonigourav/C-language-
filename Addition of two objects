@@ -15,22 +15,36 @@ class A{
            x = a; 
         }
     void operator +(A);
+    void operator -(A);
+    void operator *(A);
     // void display();
    
 };
 
 void A :: operator +(A a){
     int m = x + a.x;
-    std::cout << a.x << std::endl;
-    std::cout << "the re is : "<<m << std::endl;
+    // std::cout << a.x << std::endl;
+    std::cout << "the result of add is : "<<m << std::endl;
+}
+void A :: operator -(A a){
+    int m = x - a.x;
+    // std::cout << a.x << std::endl;
+    std::cout << "the result of sub is : "<<m << std::endl;
+}
+void A :: operator *(A a){
+    int m = x * a.x;
+    // std::cout << a.x << std::endl;
+    std::cout << "the result of multiply is : "<<m << std::endl;
 }
 int main()
 {
     A a1(5);
     
     A a2(6);
-    A a3(9);
+  
     a1+a2;
+    a1-a2;
+    a1*a2;
     
 
     return 0;

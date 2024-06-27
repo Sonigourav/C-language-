@@ -1,0 +1,48 @@
+#include <iostream>
+
+class Time {
+private:
+    int hours;
+    int minutes;
+    int seconds;
+
+public:
+    // Constructors
+    Time(int h, int m, int s){
+        hours = h;
+        minutes = m;
+        seconds = s;
+    }
+
+    // Overload operator +
+    Time operator+(const Time T) const {
+        int totalSeconds = seconds + T.seconds;
+        int additionalMinutes = totalSeconds / 60;
+        int remainingSeconds = totalSeconds % 60;
+
+        int totalMinutes = minutes + T.minutes + additionalMinutes;
+        int additionalHours = totalMinutes / 60;
+        int remainingMinutes = totalMinutes % 60;
+
+        int totalHours = hours + T.hours + additionalHours;
+
+        return Time(totalHours, remainingMinutes, remainingSeconds);
+    }
+
+    // Overload operator <<
+    friend std::ostream& operator<<(std::ostream& os, const Time& time) {
+        os << time.hours << " hours, " << time.minutes << " minutes, " << time.seconds << " seconds";
+        return os;
+    }
+};
+
+int main() {
+    Time t1(1, 30, 45);
+    Time t2(2, 15, 20);
+
+    // Add two Time objects
+    Time sum = t1 + t2;
+    std::cout << "Sum of t1 (" << t1 << ") and t2 (" << t2 << ") is " << sum << std::endl;
+
+    return 0;
+}

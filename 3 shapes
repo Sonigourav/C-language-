@@ -1,0 +1,73 @@
+#include<iostream>
+using namespace std;
+
+class Shape{
+    public : 
+        virtual double calculateArea();
+        
+        virtual void displayArea();
+};
+
+class Rectangle : public Shape{
+    private : 
+        double len;
+        double wid;
+    public : 
+        Rectangle(double l, double w){
+            len =l;
+            wid = w;
+        }
+        
+        double calculateArea()  {
+            return len * wid;
+        }
+        
+        void displayArea()  {
+            std::cout << "Area of rectangle : " << calculateArea() << std::endl;
+        }
+};
+class Circle : public Shape{
+  private : 
+        double radius;
+   public :
+        Circle(double r){
+            radius = r;
+        }
+        
+        double calculateArea()  {
+            return 3.14 * radius * radius;
+        }
+        
+        void displayArea()  {
+            std::cout << "Area of circle : " << calculateArea() << std::endl;
+        }
+};
+class Traingle : public Shape{
+    private : 
+        double base;
+        double height;
+    public : 
+        Traingle(double b, double h){
+            base = b;
+            height = h;
+        }
+        
+        double calculateArea()  {
+            return 0.5 * base * height;
+        }
+        
+        void displayArea()   {
+            std::cout << "Area of Traingle : " << calculateArea()<< std::endl;
+        }
+        
+};
+
+int main(){
+    Rectangle rect(5.0,6.0);
+    Circle cir(4.0);
+    Traingle tri(6.0,8.0);
+    
+    rect.displayArea();
+    cir.displayArea();
+    tri.displayArea();
+}

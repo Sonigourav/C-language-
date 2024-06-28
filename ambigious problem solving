@@ -1,0 +1,22 @@
+#include <iostream>
+int passby(float x, float y){
+    int t = x;
+    x = y;
+    y = t;
+    std::cout << "iside fuction Swaping" << x<< " " << y << std::endl;
+}
+void passby(int &x, int &y){
+    int t = x;
+    x = y;
+    y = t;
+    // std::cout << "After Swaping" << x<< " " << y << std::endl;
+}
+int main()
+{
+    float a=10, b=9;
+   
+    passby(a,b);
+     std::cout << "After Swaping : " << a << " " << b << std::endl;
+
+    return 0;
+}

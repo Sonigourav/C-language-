@@ -1,0 +1,25 @@
+#include <iostream>
+class Point{
+    public :
+        double x,y;
+        Point(double x1,double y1){
+            x = x1;
+            y= y1;
+            std::cout << "para cons" << std::endl;
+        }
+        Point(Point &o){
+            x = o.x;
+            y=o.y;
+             std::cout << "copy cons" << std::endl;
+        }
+};
+int main()
+{
+    Point p(1.0,2.0);
+    Point r = p;
+    std::cout << r.x << std::endl;
+   
+    
+
+    return 0;
+}

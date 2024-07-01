@@ -1,0 +1,54 @@
+#include <iostream>
+#include <vector>
+
+class Animal {
+public:
+    virtual void speak() const = 0; 
+    virtual ~Animal() = default;    
+};
+
+class Lion : public Animal {
+public:
+    void speak() 
+    const override { std::cout << "Roar\n"; }
+};
+
+class Elephant : public Animal {
+public:
+    void speak() 
+    const override { std::cout << "Trumpet\n"; }
+};
+
+class Dog : public Animal {
+public:
+    void speak() 
+    const override { std::cout << "Bark\n"; }
+};
+
+class Cat : public Animal {
+public:
+    void speak() 
+    const override { std::cout << "Meow\n"; }
+};
+
+class Cow : public Animal {
+public:
+    void speak() 
+    const override { std::cout << "Moo\n"; }
+};
+
+int main() {
+    std::vector<Animal*> sound = {
+        new Lion(),
+        new Elephant(),
+        new Dog(),
+        new Cat(),
+        new Cow()
+    };
+
+    for (const auto& animal : sound) {
+        animal->speak();
+    }
+ 
+    return 0;
+}

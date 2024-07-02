@@ -1,0 +1,89 @@
+#include <iostream>
+#include <string>
+
+class MathUtil {
+public:
+    static int add(int a, int b) {
+        return a + b;
+    }
+
+    static int subtract(int a, int b) {
+        return a - b;
+    }
+
+    static int multiply(int a, int b) {
+        return a * b;
+    }
+
+    static double divide(int a, int b) {
+        if (b == 0) {
+            std::cerr << "Division by zero error!" << std::endl;
+            return 0;
+        }
+        return static_cast<double>(a) / b;
+    }
+};
+
+class CurrencyConverter {
+public:
+    static double exchangeRate; // USD to EUR exchange rate
+
+    static double convertToEur(double amount) {
+        return amount * exchangeRate;
+    }
+
+    static double convertFromEur(double amount) {
+        return amount / exchangeRate;
+    }
+};
+
+double CurrencyConverter::exchangeRate = 0.85; // Example exchange rate
+
+int main() {
+    // Math Utility
+    int num1, num2;
+    char operation;
+    std::cout << "Enter two integers: ";
+    std::cin >> num1 >> num2;
+    std::cout << "Enter operation (+, -, *, /): ";
+    std::cin >> operation;
+
+    switch (operation) {
+    case '+':
+        std::cout << "Result: " << MathUtil::add(num1, num2) << std::endl;
+        break;
+    case '-':
+        std::cout << "Result: " << MathUtil::subtract(num1, num2) << std::endl;
+        break;
+    case '*':
+        std::cout << "Result: " << MathUtil::multiply(num1, num2) << std::endl;
+        break;
+    case '/':
+        std::cout << "Result: " << MathUtil::divide(num1, num2) << std::endl;
+        break;
+    default:
+        std::cout << "Invalid operation." << std::endl;
+        break;
+    }
+
+    // Currency Converter
+    double amount;
+    std::string direction;
+    std::cout << "Enter amount: ";
+    std::cin >> amount;
+    std::cout << "Enter conversion direction (USD to EUR or EUR to USD): ";
+    std::cin.ignore(); // Ignore newline left in buffer
+    std::getline(std::cin, direction);
+
+    if (direction == "USD to EUR") {
+        double eur = CurrencyConverter::convertToEur(amount);
+        std::cout << amount << " USD is " << eur << " EUR." << std::endl;
+    } else if (direction == "EUR to USD") {
+        double usd = CurrencyConverter::convertFromEur(amount);
+        std::cout << amount << " EUR is " << usd << " USD." << std::endl;
+    } else {
+        std::cout << "Invalid direction." << std::endl;
+    }
+
+    return 0;
+}

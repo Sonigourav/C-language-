@@ -1,0 +1,59 @@
+#include <iostream>
+#include <string>
+#include <sstream>
+
+class User {
+private:
+    std::string username;
+    std::string profile_picture;
+
+public:
+    User(const std::string& username, const std::string& profile_picture) 
+        : username(username), profile_picture(profile_picture) {}
+
+    std::string getUsername() const {
+        return username;
+    }
+    std::string getProfilePicture() const {
+        return profile_picture;
+    }
+};
+
+class Post : public User {
+private:
+    std::string post_content;
+    std::string timestamp;
+
+public:
+    // Constructor
+    Post(const std::string& username, const std::string& profile_picture, const std::string& post_content, const std::string& timestamp)
+        : User(username, profile_picture), post_content(post_content), timestamp(timestamp) {}
+
+    // Getter for post content
+    std::string getPostContent() const {
+        return post_content;
+    }
+
+    // Getter for timestamp
+    std::string getTimestamp() const {
+        return timestamp;
+    }
+
+    // Function to get post info
+    std::string getPostInfo() const {
+        std::stringstream ss;
+        ss << "Username: " << getUsername() << "\n"
+           << "Profile Picture: " << getProfilePicture() << "\n"
+           << "Post Content: " << getPostContent() << "\n"
+           << "Timestamp: " << getTimestamp();
+        return ss.str();
+    }
+};
+
+int main() {
+    // Example usage
+    Post post("nithya", "profile_pic.jpg", "This is a post content", "2024-07-02 12:34:56");
+    std::cout << post.getPostInfo() << std::endl;
+
+    return 0;
+}

@@ -1,0 +1,67 @@
+#include <iostream>
+#include <vector>
+#include <memory>
+
+// Abstract base class
+class Shape {
+public:
+    virtual double area() const = 0; // Pure virtual function
+    virtual std::string name() const = 0; // Pure virtual function for name
+    virtual ~Shape() {} // Virtual destructor
+};
+
+// Derived class for Circle
+class Circle : public Shape {
+private:
+    double radius;
+public:
+    Circle(double r) : radius(r) {}
+    double area() const override {
+        return 3.14159 * radius * radius;
+    }
+    std::string name() const override {
+        return "Circle";
+    }
+};
+
+// Derived class for Rectangle
+class Rectangle : public Shape {
+private:
+    double width, height;
+public:
+    Rectangle(double w, double h) : width(w), height(h) {}
+    double area() const override {
+        return width * height;
+    }
+    std::string name() const override {
+        return "Rectangle";
+    }
+};
+
+// Derived class for Triangle
+class Triangle : public Shape {
+private:
+    double base, height;
+public:
+    Triangle(double b, double h) : base(b), height(h) {}
+    double area() const override {
+        return 0.5 * base * height;
+    }
+    std::string name() const override {
+        return "Triangle";
+    }
+};
+
+int main() {
+    std::vector<std::shared_ptr<Shape>> shapes;
+    
+    shapes.push_back(std::make_shared<Circle>(1.0));
+    shapes.push_back(std::make_shared<Rectangle>(2.0, 3.0));
+    shapes.push_back(std::make_shared<Triangle>(3.0, 7.0));
+
+    for(const auto& shape : shapes) {
+        std::cout << shape->name() << " Area: " << shape->area() << std::endl;
+    }
+
+    return 0;
+}

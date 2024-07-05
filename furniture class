@@ -1,0 +1,67 @@
+#include <iostream>
+#include <memory>  
+
+using namespace std;
+
+
+class Chair {
+public:
+    virtual void sitOn() const = 0;
+ 
+};
+
+
+class ModernChair : public Chair {
+public:
+    void sitOn() const override {
+        cout << "Sitting on a modern chair." << endl;
+    }
+};
+
+class ClassicChair : public Chair {
+public:
+    void sitOn() const override {
+        cout << "Sitting on a classic chair." << endl;
+    }
+};
+
+
+class FurnitureFactory {
+public:
+    virtual shared_ptr<Chair> createChair() = 0;
+    
+};
+
+class ModernFurnitureFactory : public FurnitureFactory {
+public:
+    shared_ptr<Chair> createChair() override {
+        return make_shared<ModernChair>();
+    }
+};
+
+class ClassicFurnitureFactory : public FurnitureFactory {
+public:
+    shared_ptr<Chair> createChair() override {
+        return make_shared<ClassicChair>();
+    }
+};
+
+
+void clientCode(FurnitureFactory* factory) {
+    shared_ptr<Chair> chair = factory->createChair();
+    chair->sitOn();
+}
+
+int main() {
+   
+    cout << "Creating Modern Furniture:" << endl;
+    FurnitureFactory* modernFactory = new ModernFurnitureFactory();
+    clientCode(modernFactory);
+    cout << endl;
+    cout << "Creating Classic Furniture:" << endl;
+    FurnitureFactory* classicFactory = new ClassicFurnitureFactory();
+    clientCode(classicFactory);
+   
+
+    return 0;
+}

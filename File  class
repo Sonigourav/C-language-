@@ -1,0 +1,47 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class File {
+public:
+    virtual void readData() = 0;
+};
+
+class TextFile : public File {
+public:
+    void readData() override {
+        cout << "Reading text file..." << endl;
+       
+    }
+};
+
+
+class ImageFile : public File {
+public:
+    void readData() override {
+        cout << "Reading image file..." << endl;
+        
+    }
+};
+
+void processFile(File* file) {
+    try {
+        file->readData();
+    } catch (const exception& e) {
+        cerr << "Error occurred: " << e.what() << endl;
+    }
+}
+
+int main() {
+    TextFile textFile;
+    ImageFile imageFile;
+
+    cout << "Processing text file:" << endl;
+    processFile(&textFile);
+  
+    cout << "\nProcessing image file:" << endl;
+    processFile(&imageFile);
+
+    return 0;
+}

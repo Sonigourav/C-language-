@@ -1,0 +1,177 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm> // for std::find
+
+using namespace std;
+
+
+struct Passenger {
+    string name;
+    string passportNumber;
+};
+
+
+struct Flight {
+    string flightNumber;
+    string departureAirport;
+    string arrivalAirport;
+    string departureDateTime;
+    string arrivalDateTime;
+    int availableSeats;
+    float pricePerSeat;
+    vector<Passenger> passengers; 
+};
+
+
+vector<Flight> flights;
+
+
+void displayAvailableFlights( string& origin,  string& destination,  string& fromDate,  string& toDate);
+void bookSeats( string& flightNumber, int numSeats,  Passenger& passenger);
+void cancelBooking( string& flightNumber, int numSeats,  Passenger& passenger);
+void displayBookedFlights( string& passengerName,  string& passportNumber);
+void addNewFlight( Flight& newFlight);
+
+
+void displayAvailableFlights(const string& origin, const string& destination, const string& fromDate, const string& toDate) {
+    cout << "available flights from " << origin << " to " << destination << " between " << fromDate << " and " << toDate << ":" << endl;
+    
+    bool foundFlights = false;
+    
+    for (const auto& flight : flights) {
+        if (flight.departureAirport == origin && flight.arrivalAirport == destination) {
+         
+            if (flight.departureDateTime >= fromDate && flight.departureDateTime <= toDate) {
+                cout << "Flight Number: " << flight.flightNumber << endl;
+                cout << "Departure: " << flight.departureAirport << " at " << flight.departureDateTime << endl;
+                cout << "Arrival: " << flight.arrivalAirport << " at " << flight.arrivalDateTime << endl;
+                cout << "Available Seats: " << flight.availableSeats << endl;
+                cout << "Price per seat: " << flight.pricePerSeat << endl;
+                foundFlights = true;
+            }
+        }
+    }
+    
+    if (!foundFlights) {
+        cout << "No Match" << endl;
+    }
+}
+
+
+void bookSeats(const string& flightNumber, int numSeats, const Passenger& passenger) {
+  
+    auto it = find_if(flights.begin(), flights.end(), [&flightNumber](const Flight& flight) {
+        return flight.flightNumber == flightNumber;
+    });
+    
+    if (it != flights.end()) {
+        Flight& flight = *it;
+        
+        if (flight.availableSeats >= numSeats) {
+           
+            for (int i = 0; i < numSeats; ++i) {
+                flight.passengers.push_back(passenger);
+            }
+            flight.availableSeats -= numSeats;
+            
+            cout << numSeats << " seat booked successfully in:  " << flightNumber << "." << endl;
+        } else {
+            cout << "flight full " << flightNumber << "." << endl;
+        }
+    } else {
+        cout << "Flight " << flightNumber << " not found." << endl;
+    }
+}
+
+
+void cancelBooking(const string& flightNumber, int numSeats, const Passenger& passenger) {
+  
+    auto it = find_if(flights.begin(), flights.end(), [&flightNumber](const Flight& flight) {
+        return flight.flightNumber == flightNumber;
+    });
+    
+    if (it != flights.end()) {
+        Flight& flight = *it;
+       
+        int countCancelled = 0;
+        auto passengerIt = flight.passengers.begin();
+        while (passengerIt != flight.passengers.end()) {
+            if (passengerIt->name == passenger.name && passengerIt->passportNumber == passenger.passportNumber) {
+                passengerIt = flight.passengers.erase(passengerIt);
+                ++countCancelled;
+                if (countCancelled == numSeats) break; // Cancelled enough seats
+            } else {
+                ++passengerIt;
+            }
+        }
+        
+        if (countCancelled > 0) {
+            flight.availableSeats += countCancelled;
+            cout << countCancelled << " seat cancelled successfully for  " << flightNumber << "." << endl;
+        } else {
+            cout << "No booking for this " << flightNumber << "." << endl;
+        }
+    } else {
+        cout << "Flight " << flightNumber << " not found." << endl;
+    }
+}
+
+void displayBookedFlights(const string& passengerName, const string& passportNumber) {
+    cout << "Booked flights :  " << passengerName << " (" << passportNumber << "):" << endl;
+    
+    bool foundFlights = false;
+    
+    for (const auto& flight : flights) {
+        for (const auto& bookedPassenger : flight.passengers) {
+            if (bookedPassenger.name == passengerName && bookedPassenger.passportNumber == passportNumber) {
+                cout << "Flight Number: " << flight.flightNumber << endl;
+                cout << "Departure: " << flight.departureAirport << " at " << flight.departureDateTime << endl;
+                cout << "Arrival: " << flight.arrivalAirport << " at " << flight.arrivalDateTime << endl;
+               
+                foundFlights = true;
+                break; 
+            }
+        }
+    }
+    
+    if (!foundFlights) {
+        cout << "No flights booked for this passenger." << endl;
+    }
+}
+
+
+
+int main() {
+    
+    flights = {
+        {"ABC123", "JFK", "LAX", "2024-07-05 08:00", "2024-07-05 11:00", 100, 300.0, {}},
+        {"XYZ456", "LAX", "ORD", "2024-07-06 10:00", "2024-07-06 13:00", 50, 250.0, {}}
+    };
+  
+    displayAvailableFlights("JFK", "LAX", "2024-07-01", "2024-07-10");
+    cout << endl;
+    
+    
+    Passenger passenger1 {"Gourav soni", "AB123456"};
+    bookSeats("ABC123", 2, passenger1);
+    cout << endl;
+   
+    displayBookedFlights("Gourav soni", "AB123456");
+    cout << endl;
+    
+    
+    cancelBooking("ABC123", 1, passenger1);
+    cout << endl;
+
+    displayAvailableFlights("JFK", "LAX", "2024-07-01", "2024-07-10");
+    cout << endl;
+ 
+   
+    
+    displayAvailableFlights("SFO", "SEA", "2024-07-01", "2024-07-10");
+    cout << endl;
+    
+    return 0;
+}
+

@@ -1,0 +1,30 @@
+#include <iostream>
+
+int calculateArea(int width, int height) {
+    return width * height;
+}
+
+
+double calculateArea(double width, double height) {
+    return width * height;
+}
+
+int main() {
+  
+    int widthInt = 5, heightInt = 3;
+    int areaInt = calculateArea(widthInt, heightInt);
+    
+    double area = static_cast<double>(areaInt);
+    std::cout << "Area of rectangle in int type  : " << areaInt << std::endl;
+      std::cout << "Area of rectangle explicit in double  : " << area << std::endl;
+    
+    
+   
+    double widthDouble = 5.5, heightDouble = 3.5;
+    double areaDouble = calculateArea(widthDouble, heightDouble);
+    int area1 = static_cast<int>(areaDouble);
+    std::cout << "Area of rectangle in double type  : "  << areaDouble<< std::endl;
+    std::cout << "Area of rectangle explicit in int  : " << area1 << std::endl;
+
+    return 0;
+}

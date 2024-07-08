@@ -1,0 +1,18 @@
+#include<iostream>
+using namespace std;
+
+int main(){
+    int n =10;
+    bool f = true;
+    
+    auto result = [](int n, bool f){
+        if(f){
+            return n * 2;
+        }else {
+            return n * 1;
+        }
+    };
+    
+    int re = result(n, f);
+    std::cout << "Result is : " << re << std::endl;
+}

@@ -1,0 +1,13 @@
+#include<iostream>
+using namespace std;
+
+int main(){
+    int arr[] = {10,20,30,40,50};
+    int *ptr = arr;
+    
+    float *float_ptr = reinterpret_cast<float*>(ptr);
+    
+    for(int i=0;i<5;i++){
+        std::cout << "ptr array is : " << (*float_ptr + i) << std::endl;
+    }
+}

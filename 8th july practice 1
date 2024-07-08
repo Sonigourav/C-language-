@@ -1,0 +1,12 @@
+#include<iostream>
+using namespace std;
+
+
+int main(){
+    int a = 10;
+    float b = 3.14;
+    
+    float  result = (float)a/b;
+    
+    std::cout << "result is : " << result << std::endl;
+}

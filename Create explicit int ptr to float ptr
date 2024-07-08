@@ -1,0 +1,13 @@
+#include<iostream>
+using namespace std;
+
+
+int main(){
+    int num = 10;
+    int *ptr = &num;
+    
+    float *float_ptr = reinterpret_cast<float*>(ptr);
+    
+    std::cout << "num is : " << num << std::endl;
+    std::cout << "Explicit pointer is : " << *float_ptr << std::endl;
+}

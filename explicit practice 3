@@ -1,0 +1,13 @@
+#include<iostream>
+using namespace std;
+
+
+int main(){
+    double d = 123.456;
+    int  i;
+    
+     i = static_cast<int>(d);
+    
+    std::cout << "Explicit value of d : " << i << std::endl;
+}
+

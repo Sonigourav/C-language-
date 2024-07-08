@@ -1,0 +1,32 @@
+#include<iostream>
+#include<typeinfo>
+using namespace std;
+
+class Base{
+    public:
+        virtual void whoamI(){
+            std::cout << "I am Base class object\n" << std::endl;
+        }
+};
+
+class Derived : public Base{
+    public : 
+        void whoamI() override {
+            std::cout << "I am Derived class object" << std::endl;
+        }
+};
+
+int main(){
+    Base* base_ptr = new Derived;
+    
+    Derived* derived_ptr = dynamic_cast<Derived*>(base_ptr);
+    
+    if(derived_ptr != nullptr){
+        derived_ptr -> whoamI();
+    }else {
+        std::cout << "Cast Failed : Base class object is not actually Derived" << std::endl;
+    }
+    delete base_ptr;
+    
+    
+}

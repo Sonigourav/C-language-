@@ -1,0 +1,16 @@
+#include<iostream>
+using namespace std;
+
+
+int main(){
+   int x = 10;
+   int &int_ref = x;
+   
+   float &float_ref = reinterpret_cast<float&>(int_ref);
+   
+   int_ref = 11;
+   
+   std::cout << "int_ref value is : " << int_ref << std::endl;
+   
+   std::cout << "float_ref value is : " << float_ref << std::endl;
+}

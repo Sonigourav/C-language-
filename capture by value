@@ -1,0 +1,15 @@
+#include<iostream>
+
+using namespace std;
+
+int main(){
+    
+    auto squ = [](int n){return n * n;};
+    
+    int n;
+    std::cout << "Enter the number : " << std::endl;
+    cin>>n;
+    
+    int sq = squ(n);
+    std::cout << "Square is : " << sq << std::endl;
+}

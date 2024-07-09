@@ -1,0 +1,40 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+// Example Task class
+class Task {
+public:
+    std::string description;
+    int priority;
+    std::string due_date;
+
+    Task(const std::string& desc, int pri, const std::string& due)
+        : description(desc), priority(pri), due_date(due) {}
+
+    void printDetails() const {
+        std::cout << "Description: " << description << ", Priority: " << priority << ", Due Date: " << due_date << std::endl;
+    }
+};
+
+int main() {
+   
+    std::vector<Task> tasks;
+
+    Task task1("Task 1", 1, "2024-07-10");
+    tasks.insert(tasks.begin(), task1);
+
+  
+    tasks.emplace(tasks.begin(), "Task 2", 2, "2024-07-11");
+
+   
+    std::cout << "Tasks in vector:" << std::endl;
+    for (const auto& task : tasks) {
+        task.printDetails();
+    }
+
+    return 0;
+}
+
+
+          

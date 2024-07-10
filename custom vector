@@ -1,0 +1,72 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+class CustomVector{
+    private : 
+        double* element;
+        int capacity;
+        int siz;
+    public :
+        CustomVector():element(nullptr), capacity(0), siz(0){}
+        
+        
+        int size() const{
+            return siz;
+        }
+        
+        void addElem(double value){
+            if (siz >= capacity) {
+           
+            capacity = (capacity == 0) ? 1 : capacity * 2;
+            double* newElements = new double[capacity];
+            for (int i = 0; i < siz; ++i) {
+                newElements[i] = element[i];
+            }
+            element = newElements;
+        }
+        // Add value to vector and increase size
+        element[siz] = value;
+        ++siz;
+    }
+    // Function to get element at index
+      double at(int index) {
+        return element[index];
+    }
+     // Function to print elements of the vector
+    void print() const {
+        std::cout << "CustomVector : ";
+        for (int i = 0; i < siz; ++i) {
+            std::cout << element[i];
+            if (i < siz - 1) {
+                std::cout << ", ";
+            }
+        }
+    }
+    
+    
+            
+    
+};
+
+int main(){
+    CustomVector v;
+    v.addElem(1.0);
+    v.addElem(2.0);
+    v.addElem(3.0);
+    v.addElem(4.0);
+
+    std::cout << "Size of vector: " << v.size() << std::endl;
+    std::cout << "Element at index 1: " << v.at(1) << std::endl;
+
+    v.print();
+
+    return 0;
+}
+
+
+
+// if (index >= siz) {
+        //     std::out_of_range("Index out of range");
+        // }

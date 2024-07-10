@@ -1,0 +1,57 @@
+#include<iostream>
+#include<stack>
+using namespace std;
+
+void sort(std::stack<int>& s){
+    std::stack<int> s1 ;
+    
+    while(!s.empty()){
+        int t = s.top();
+        s.pop();
+        
+        while(!s1.empty() && s1.top() > t){
+            s.push(s1.top());
+            s1.pop();
+        }
+        
+        s1.push(t);
+    }
+    
+    while(!s1.empty()){
+        s.push(s1.top());
+        s1.pop();
+    }
+}
+
+
+
+
+
+void printSt(std::stack<int> s){
+    while(!s.empty()){
+        std::cout << s.top()<<" ";
+        s.pop();
+    }
+    cout<<std::endl;
+    
+}
+
+int main(){
+    std::stack<int> s ;
+    
+    s.push(1);
+    s.push(5);
+    s.push(6);
+    s.push(4);
+    s.push(2);
+    s.push(3);
+    std::cout << " Before Stack " << std::endl;
+    printSt(s);
+    
+    sort(s);
+    
+    std::cout << "After Sort stack" << std::endl;
+    printSt(s);
+    
+    
+}

@@ -1,0 +1,41 @@
+#include<iostream>
+#include<queue>
+#include<stack>
+using namespace std;
+
+class findMaxElement{
+    public : 
+        std::stack<int>s;
+        std::stack<int>maxSt;
+    
+    void push(int x){
+        s.push(x);
+        if(maxSt.empty() || x >= maxSt.top()){
+            maxSt.push(x);
+        }
+    }
+    
+    int max(){
+        if(!maxSt.empty()){
+            return maxSt.top();
+        }else {
+            return -1;
+        }
+        
+    }
+};
+
+int main(){
+    findMaxElement Stack;
+    
+    Stack.push(3);
+    Stack.push(9);
+    Stack.push(19);
+    Stack.push(33);
+    Stack.push(0);
+    Stack.push(4);
+    
+    
+    std::cout << Stack.max() << std::endl;
+    
+}

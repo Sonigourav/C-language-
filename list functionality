@@ -1,0 +1,86 @@
+#include<iostream>
+#include<list>
+using namespace std;
+
+int main(){
+    std::list<int> mylist;
+    
+    mylist.push_back(10);
+    mylist.push_back(20);
+    mylist.push_back(30);
+    
+    mylist.push_front(5);
+    mylist.push_front(1);
+    
+    std::cout << "List after push_back and push_front : ";
+    for(int val : mylist){
+        std::cout << val <<" ";
+    }
+    std::cout<< std::endl;
+    
+    
+    it = mylist.begin();
+    std::advance(it,3);
+    mylist.erase(it);
+    
+    std::cout << "List after erase";
+    for(int val : mylist){
+        std::cout << val<<" ";
+    }
+    std::cout<< std::endl;
+    
+    mylist.remove(10);
+        std::cout << "List after remove";
+    for(int val : mylist){
+        std::cout << val<<" ";
+    }
+    std::cout<< std::endl;
+    
+    mylist.remove_if([](int n){return n < 10;});
+        std::cout << "List after remove_if";
+    for(int val : mylist){
+        std::cout << val<<" ";
+    }
+    std::cout<< std::endl;
+    
+    mylist.sort();
+        std::cout << "List after sort";
+    for(int val : mylist){
+        std::cout << val<<" ";
+    }
+    std::cout<< std::endl;
+    
+    mylist.reverse();
+        std::cout << "List after reverse";
+    for(int val : mylist){
+        std::cout << val<<" ";
+    }
+    std::cout<< std::endl;
+    
+    std::list<int> otherlist = {40,50,60};
+    mylist.merge(otherlist);
+        std::cout << "List after merge";
+    for(int val : mylist){
+        std::cout << val<<" ";
+    }
+    std::cout<< std::endl;
+    
+    mylist.clear();
+        std::cout << "List after clear";
+    for(int val : mylist){
+        std::cout << val<<" ";
+    }
+    std::cout<< std::endl;
+    
+    if(mylist.empty()){
+        std::cout << "List is empty" << std::endl;
+    }
+    
+    mylist.push_back(100);
+    mylist.push_back(200);
+    
+    std::cout << "Front Element : "<< mylist.front() << std::endl;
+    std::cout << "Back Element : "<< mylist.back() << std::endl;
+    
+    return 0;
+}

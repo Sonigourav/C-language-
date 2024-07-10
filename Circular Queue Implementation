@@ -1,0 +1,82 @@
+#include <iostream>
+using namespace std;
+
+class MyCircularQueue {
+private:
+    int *arr;
+    int front, rear, size, capacity;
+
+public:
+    MyCircularQueue(int k) {
+        capacity = k;
+        arr = new int[capacity];
+        size = 0;
+        front = -1;
+        rear = -1;
+    }
+
+    bool isEmpty() {
+        return size == 0;
+    }
+
+    bool isFull() {
+        return size == capacity;
+    }
+
+    void enqueue(int value) {
+        if (isFull()) {
+            cout << "Queue is full\n";
+            return;
+        }
+        if (isEmpty()) {
+            front = 0; 
+        }
+        rear = (rear + 1) % capacity;
+        arr[rear] = value;
+        size++;
+    }
+
+    int dequeue() {
+        if (isEmpty()) {
+            cout << "Queue is empty\n";
+            return -1;
+        }
+        int removedValue = arr[front];
+        if (front == rear) {
+            front = -1;
+            rear = -1;
+        } else {
+            front = (front + 1) % capacity;
+        }
+        size--;
+        return removedValue;
+    }
+
+    int frontValue() {
+        if (isEmpty()) {
+            cout << "Queue is empty\n";
+            return -1; 
+        }
+        return arr[front];
+    }
+};
+
+int main() {
+    MyCircularQueue q(5);
+
+    q.enqueue(1);
+    q.enqueue(2);
+    q.enqueue(3);
+    q.enqueue(4);
+    q.enqueue(5);
+
+    cout << "Front element: " << q.frontValue() << endl;
+
+    q.dequeue();
+
+    q.enqueue(6);
+
+    cout << "Front element after dequeue and enqueue: " << q.frontValue() << endl;
+
+    return 0;
+}

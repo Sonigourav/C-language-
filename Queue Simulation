@@ -1,0 +1,49 @@
+#include <iostream>
+#include <queue>
+#include <string>
+
+
+void displayQueue(const std::queue<std::string>& q) {
+    std::queue<std::string> temp = q;
+    while (!temp.empty()) {
+        std::cout << temp.front() << " ";
+        temp.pop();
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    std::queue<std::string> customerQueue;
+    int customersServed = 0;
+
+    
+    customerQueue.push("Customer1");
+    customerQueue.push("Customer2");
+    customerQueue.push("Customer3");
+    customerQueue.push("Customer4");
+
+    std::cout << "Current queue: ";
+    displayQueue(customerQueue);
+
+    if (!customerQueue.empty()) {
+        customerQueue.pop();
+        customersServed++;
+    }
+
+    std::cout << "Current queue after  one customer: ";
+    displayQueue(customerQueue);
+
+   
+    if (!customerQueue.empty()) {
+        customerQueue.pop();
+        customersServed++;
+    }
+
+    std::cout << "Current queue after  another customer: ";
+    displayQueue(customerQueue);
+
+   
+    std::cout << "Number of customers : " << customersServed << std::endl;
+
+    return 0;
+}

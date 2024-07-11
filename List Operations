@@ -1,0 +1,49 @@
+#include <iostream>
+#include <list>
+#include <algorithm> 
+
+
+void display(const std::list<int>& lst) {
+    for (int elem : lst) {
+        std::cout << elem << " ";
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    std::list<int> myList;
+
+    myList.push_front(5);
+    myList.push_front(3);
+    myList.push_back(8);
+    myList.push_back(1);
+
+    std::cout << "inserting elements at the front and back: ";
+    display(myList);
+
+   
+    myList.pop_front();
+    myList.pop_back();
+
+    std::cout << "removing elements from the front and back: ";
+    display(myList);
+
+    
+    myList.sort();
+
+    std::cout << "List after sorting in ascending order: ";
+    display(myList);
+
+    
+    myList.sort(std::greater<int>());
+
+    std::cout << "List after sorting in descending order: ";
+    display(myList);
+
+    myList.reverse();
+
+    std::cout << "List after reversing: ";
+    display(myList);
+
+    return 0;
+}

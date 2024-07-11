@@ -1,0 +1,52 @@
+#include<iostream>
+#include<fstream>
+#include<string>
+
+using namespace std;
+
+int main(){
+    string fileName;
+    char choice;
+    
+    cout<<"Enter the file name : ";
+    cin>>fileName;
+    
+    cout<<"Enter 'r' to read from the file or 'w' to write to the file : ";
+    cin>>choice;
+    
+    if(choice == 'r'){
+        ifstream inputFile(fileName);
+        
+        if(inputFile.is_open()){
+            string line;
+            
+            while(getline(inputFile, line)){
+                std::cout << line << std::endl;
+            }
+            inputFile.close();
+        }else{
+            std::cout << "error opening file for reading" << std::endl;
+            
+        }
+    }else if(choice == 'w'){
+        ofstream outputFile(fileName);
+        
+        if(outputFile.is_open()){
+            string content;
+            
+            cout<<"enter the content to write the file";
+            getline(cin,content, '\n');
+            
+            outputFile<<content<<endl;
+            outputFile.close();
+            std::cout << "Content written to the file successfully" << std::endl;
+            
+        }else{
+            std::cout << "Error opening for wriing" << std::endl;
+        }
+        
+    }else{
+        cout<<"Invalid choice. Please enter 'r' or 'w'."<<endl;
+    }
+    return 0;
+}

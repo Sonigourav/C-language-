@@ -1,0 +1,62 @@
+#include <iostream>
+#include <stack>
+#include <sstream>
+
+
+using namespace std;
+
+int evaluatePostfix(string postfix) {
+    stack<int> operands;
+
+    
+    for (char& ch : postfix) {
+       
+        if (isdigit(ch)) {
+            operands.push(ch - '0'); 
+        }
+        
+        else if (ch == '+' || ch == '-' || ch == '*' || ch == '/') {
+          
+            int operand2 = operands.top();
+            operands.pop();
+            int operand1 = operands.top();
+            operands.pop();
+
+           
+            int result = 0;
+            switch (ch) {
+                case '+':
+                    result = operand1 + operand2;
+                    break;
+                case '-':
+                    result = operand1 - operand2;
+                    break;
+                case '*':
+                    result = operand1 * operand2;
+                    break;
+                case '/':
+                    result = operand1 / operand2; 
+                    break;
+                default:
+                    break;
+            }
+            operands.push(result);
+        }
+    }
+
+    return operands.top();
+}
+
+int main() {
+    string postfix_expression;
+
+  
+    cout << "Enter a postfix expression: ";
+    cin>>postfix_expression;
+
+    int result = evaluatePostfix(postfix_expression);
+
+    cout << "Result  : " << result << endl;
+
+    return 0;
+}

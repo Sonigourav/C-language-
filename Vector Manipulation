@@ -1,0 +1,61 @@
+#include <iostream>
+#include <vector>
+#include <algorithm> 
+#include <numeric>   
+
+
+void display(const std::vector<float>& vec) {
+    for (float elem : vec) {
+        std::cout << elem << " ";
+    }
+    std::cout << std::endl;
+}
+
+
+float findMax(const std::vector<float>& vec) {
+    return *std::max_element(vec.begin(), vec.end());
+}
+
+float findMin(const std::vector<float>& vec) {
+    return *std::min_element(vec.begin(), vec.end());
+}
+
+float calculateAverage(const std::vector<float>& vec) {
+    float sum = std::accumulate(vec.begin(), vec.end(), 0.0);
+    return sum / vec.size();
+}
+
+int main() {
+    std::vector<float> myVector;
+
+   
+    myVector.push_back(5.5);
+    myVector.push_back(3.2);
+    myVector.push_back(8.1);
+    myVector.push_back(1.4);
+
+    std::cout << "Vector after adding elements: ";
+    display(myVector);
+
+    
+    int pos = 2;
+    if (pos >= 0 && pos < myVector.size()) {
+        myVector.erase(myVector.begin() + pos);
+    }
+    
+
+    std::cout << "Vector after removing element at position " << pos << ": ";
+    display(myVector);
+
+    float maxElem = findMax(myVector);
+    float minElem = findMin(myVector);
+
+    std::cout << "Maximum element: " << maxElem << std::endl;
+    std::cout << "Minimum element: " << minElem << std::endl;
+
+    float average = calculateAverage(myVector);
+
+    std::cout << "Average of elements: " << average << std::endl;
+
+    return 0;
+}

@@ -1,0 +1,64 @@
+#include <iostream>
+#include <conio.h>
+#include <fstream>
+
+using namespace std;
+
+class student
+{
+public:
+    struct student_data {
+        char name[20];
+        int roll;
+    } s;
+
+    void put_data();
+    void get_data();
+};
+
+void student::put_data()
+{
+    cout << "Enter name: ";
+    cin >> s.name;
+    cout << "Enter roll: ";
+    cin >> s.roll;
+
+    ofstream file("hit.txt", ios::out | ios::app | ios::binary);
+    if (file.is_open()) {
+        file.write((char*)&s, sizeof(student_data));
+        file.close();
+    } else {
+        cerr << "Error opening file for writing!" << endl;
+    }
+
+    get_data();
+}
+
+void student::get_data()
+{
+    int temp;
+    cout << "Enter roll no.: ";
+    cin >> temp;
+
+    ifstream file("hit.txt", ios::in | ios::binary);
+    if (file.is_open()) {
+        while (file.read((char*)&s, sizeof(student_data))) {
+            if (temp == s.roll) {
+                cout << "Student name: " << s.name << "\n";
+                cout << "Student roll: " << s.roll << "\n";
+                break; // Assuming only one record is needed
+            }
+        }
+        file.close();
+    } else {
+        cerr << "Error opening file for reading!" << endl;
+    }
+}
+
+int main()
+{
+    clrscr(); 
+    student st;
+    st.put_data();
+    return 0;
+}

@@ -1,0 +1,79 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+class FileOpenError : public exception {
+public:
+    const char* what() const noexcept override {
+        return "File could not be opened!";
+    }
+};
+
+class InvalidDataFormatException : public exception {
+public:
+    const char* what() const noexcept override {
+        return "Invalid data format in file!";
+    }
+};
+
+class CalculationError : public exception {
+    string message;
+public:
+    CalculationError(const string& msg) : message(msg) {}
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+};
+
+vector<int> parse_line(const string& line) {
+    stringstream ss(line);
+    vector<int> values;
+    int value;
+    while (ss >> value) {
+        values.push_back(value);
+    }
+    if (values.size() != 2) {
+        throw InvalidDataFormatException();
+    }
+    return values;
+}
+
+float perform_calculation(int a, int b) {
+    if (b == 0) {
+        throw CalculationError("Attempted to divide by zero!");
+    }
+    return static_cast<float>(a) / b;
+}
+
+int main() {
+    string filename;
+    cout << "Enter the filename: ";
+    cin >> filename;
+
+    ifstream file(filename);
+    if (!file.is_open()) {
+        throw FileOpenError();
+    }
+
+    string line;
+    while (getline(file, line)) {
+        try {
+            vector<int> values = parse_line(line);
+            int a = values[0];
+            int b = values[1];
+            float result = perform_calculation(a, b);
+            cout << "Result of a / b is :  "<< result << endl;
+        } catch (const InvalidDataFormatException& e) {
+            cerr << e.what() << " in line: " << line << endl;
+        } catch (const CalculationError& e) {
+            cerr << e.what() << " for line: " << line << endl;
+        }
+    }
+
+    file.close();
+    return 0;
+}

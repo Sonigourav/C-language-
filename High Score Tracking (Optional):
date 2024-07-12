@@ -1,0 +1,67 @@
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+struct HighScore {
+    char name[30];
+    int score;
+};
+
+void save_high_score() {
+    ofstream file("highscores.dat", ios::binary | ios::app);
+    if (!file) {
+        cerr << "Error opening file!" << endl;
+        return;
+    }
+
+    HighScore hs;
+    cout << "Enter player name: ";
+    cin >> ws; 
+    cin.getline(hs.name, 30);
+    cout << "Enter score: ";
+    cin >> hs.score;
+
+    file.write(reinterpret_cast<char*>(&hs), sizeof(hs));
+    file.close();
+    cout << "High score saved successfully!" << endl;
+}
+
+void display_high_scores() {
+    ifstream file("highscores.dat", ios::binary);
+    if (!file) {
+        cerr << "Error opening file!" << endl;
+        return;
+    }
+
+    HighScore hs;
+    while (file.read(reinterpret_cast<char*>(&hs), sizeof(hs))) {
+        cout << "Player: " << hs.name << ", Score: " << hs.score << endl;
+    }
+    file.close();
+}
+
+int main() {
+    int choice;
+
+    do {
+        cout << "1. Save a new high score\n2. Display all high scores\n3. Exit\nEnter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            save_high_score();
+            break;
+        case 2:
+            display_high_scores();
+            break;
+        case 3:
+            cout << "Exiting program." << endl;
+            break;
+        default:
+            cout << "Invalid choice, try again." << endl;
+        }
+    } while (choice != 3);
+
+    return 0;
+}

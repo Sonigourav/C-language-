@@ -1,0 +1,109 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+class Student {
+public:
+    string name;
+    int id;
+    float marks;
+
+    void input() {
+        cout << "Enter name: ";
+        cin >> ws; 
+        getline(cin, name);
+        cout << "Enter ID: ";
+        cin >> id;
+        cout << "Enter marks: ";
+        cin >> marks;
+    }
+
+    void display() const {
+        cout << "Name: " << name << ", ID: " << id << ", Marks: " << marks << endl;
+    }
+};
+
+void add_student() {
+    ofstream file("students.txt", ios::app);
+    if (!file) {
+        cerr << "Error opening file!" << endl;
+        return;
+    }
+
+    Student student;
+    student.input();
+    file << student.name << " " << student.id << " " << student.marks << endl;
+    file.close();
+}
+
+void display_students() {
+    ifstream file("students.txt");
+    if (!file) {
+        cerr << "Error opening file!" << endl;
+        return;
+    }
+
+    Student student;
+    while (file >> student.name >> student.id >> student.marks) {
+        student.display();
+    }
+    file.close();
+}
+
+void search_student() {
+    ifstream file("students.txt");
+    if (!file) {
+        cerr << "Error opening file!" << endl;
+        return;
+    }
+
+    int search_id;
+    cout << "Enter student ID to search: ";
+    cin >> search_id;
+
+    Student student;
+    bool found = false;
+    while (file >> student.name >> student.id >> student.marks) {
+        if (student.id == search_id) {
+            student.display();
+            found = true;
+            break;
+        }
+    }
+
+    if (!found) {
+        cout << "Student with ID " << search_id << " not found." << endl;
+    }
+
+    file.close();
+}
+
+int main() {
+    int choice;
+
+    do {
+        cout << "1. Add new student record\n2. Display all student records\n3. Search for a student by ID\n4. Exit\nEnter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            add_student();
+            break;
+        case 2:
+            display_students();
+            break;
+        case 3:
+            search_student();
+            break;
+        case 4:
+            cout << "Exiting program." << endl;
+            break;
+        default:
+            cout << "Invalid choice, try again." << endl;
+        }
+    } while (choice != 4);
+
+    return 0;
+}

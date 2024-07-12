@@ -1,0 +1,90 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+class Contact {
+public:
+    string name;
+    string phone_number;
+
+    void input() {
+        cout << "Enter name: ";
+        cin >> ws;
+        getline(cin, name);
+        cout << "Enter phone number: ";
+        getline(cin, phone_number);
+    }
+
+    void display() const {
+        cout << "Name: " << name << ", Phone number: " << phone_number << endl;
+    }
+};
+
+void add_contact() {
+    ofstream file("phonebook.txt", ios::app);
+    if (!file) {
+        cerr << "Error opening file!" << endl;
+        return;
+    }
+
+    Contact contact;
+    contact.input();
+    file << contact.name << " " << contact.phone_number << endl;
+    file.close();
+}
+
+void search_contact() {
+    ifstream file("phonebook.txt");
+    if (!file) {
+        cerr << "Error opening file!" << endl;
+        return;
+    }
+
+    string search_name;
+    cout << "Enter contact name to search: ";
+    cin >> ws; 
+    getline(cin, search_name);
+
+    Contact contact;
+    bool found = false;
+    while (file >> contact.name >> contact.phone_number) {
+        if (contact.name == search_name) {
+            contact.display();
+            found = true;
+            break;
+        }
+    }
+
+    if (!found) {
+        cout << "Contact with name " << search_name << " not found." << endl;
+    }
+
+    file.close();
+}
+
+int main() {
+    int choice;
+
+    do {
+        cout << "1. Add new contact\n2. Search for a contact by name\n3. Exit\nEnter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            add_contact();
+            break;
+        case 2:
+            search_contact();
+            break;
+        case 3:
+            cout << "Exiting program." << endl;
+            break;
+        default:
+            cout << "Invalid choice, try again." << endl;
+        }
+    } while (choice != 3);
+
+    return 0;
+}

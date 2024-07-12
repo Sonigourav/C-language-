@@ -1,0 +1,108 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+struct Item {
+    char name[30];
+    double price;
+    int quantity;
+};
+
+void add_item() {
+    ofstream file("inventory.dat", ios::binary | ios::app);
+    if (!file) {
+        cerr << "Error opening file!" << endl;
+        return;
+    }
+
+    Item item;
+    cout << "Enter item name: ";
+    cin >> ws; // To ignore leading whitespaces
+    cin.getline(item.name, 30);
+    cout << "Enter item price: ";
+    cin >> item.price;
+    cout << "Enter item quantity: ";
+    cin >> item.quantity;
+
+    file.write(reinterpret_cast<char*>(&item), sizeof(item));
+    file.close();
+    cout << "Item added successfully!" << endl;
+}
+
+void display_items() {
+    ifstream file("inventory.dat", ios::binary);
+    if (!file) {
+        cerr << "Error opening file!" << endl;
+        return;
+    }
+
+    Item item;
+    while (file.read(reinterpret_cast<char*>(&item), sizeof(item))) {
+        cout << "Name: " << item.name << ", Price: " << item.price << ", Quantity: " << item.quantity << endl;
+    }
+    file.close();
+}
+
+void update_quantity() {
+    fstream file("inventory.dat", ios::binary | ios::in | ios::out);
+    if (!file) {
+        cerr << "Error opening file!" << endl;
+        return;
+    }
+
+    char search_name[30];
+    cout << "Enter item name to update quantity: ";
+    cin >> ws; 
+    cin.getline(search_name, 30);
+
+    Item item;
+    bool found = false;
+    while (file.read(reinterpret_cast<char*>(&item), sizeof(item))) {
+        if (strcmp(item.name, search_name) == 0) {
+            cout << "Enter new quantity: ";
+            cin >> item.quantity;
+
+            file.seekp(-static_cast<int>(sizeof(item)), ios::cur);
+            file.write(reinterpret_cast<char*>(&item), sizeof(item));
+            found = true;
+            cout << "Quantity updated successfully!" << endl;
+            break;
+        }
+    }
+
+    if (!found) {
+        cout << "Item with name " << search_name << " not found." << endl;
+    }
+
+    file.close();
+}
+
+int main() {
+    int choice;
+
+    do {
+        cout << "1. Add new item\n2. Display all items\n3. Update item quantity\n4. Exit\nEnter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            add_item();
+            break;
+        case 2:
+            display_items();
+            break;
+        case 3:
+            update_quantity();
+            break;
+        case 4:
+            cout << "Exiting program." << endl;
+            break;
+        default:
+            cout << "Invalid choice, try again." << endl;
+        }
+    } while (choice != 4);
+
+    return 0;
+}

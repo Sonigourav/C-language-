@@ -1,0 +1,60 @@
+#include<iostream>
+using namespace std;
+
+float division(int x, int y){
+    if(y==0){
+        throw "Attempted to divide by zero";
+    }
+    return (x/y);
+}
+int multiply(int x, int y){
+    if(y==0){
+        throw"Attempted to multiply by zero";
+    }
+    return (x*y);
+}
+int Add(int x, int y){
+    int result = x + y;
+    if(result<0){
+        throw "ans will be in nagative ";
+    }
+    return result;
+}
+int sub(int x, int y){
+    return (x-y);
+}
+
+
+int main(){
+    int i;
+     int j;
+    cout<<"Enter num for i : ";
+    cin>>i;
+    cout<<"Enter num for j : ";
+    cin>>j;
+   
+    float k = 0;
+    int ch;
+    std::cout << "Enter choice : " << std::endl;
+    cin>>ch;
+    try{
+        if(ch == 1){
+        k = division(i,j);
+        cout<<k<<endl;
+        }else if(ch == 2){
+        int m = multiply(i,j);
+        cout<<m<<endl;
+        }else if(ch== 3){
+        int a = Add(i,j);
+        cout<<a<<endl;
+        }else if(ch == 4) {
+            int b = sub(i,j);
+            cout<<b<<endl; 
+        }else {
+            cout<<"valid number pls";
+        }
+    }catch(const char* e){
+        cerr<<e<<endl;
+    }
+    return 0;
+}

@@ -1,0 +1,59 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+void encrypt_file(const string& filename, int shift) {
+    ifstream infile(filename);
+    ofstream outfile("encrypted_" + filename);
+
+    if (!infile || !outfile) {
+        cerr << "Error opening file!" << endl;
+        return;
+    }
+
+    char ch;
+    while (infile.get(ch)) {
+        if (isalpha(ch)) {
+            char base = islower(ch) ? 'a' : 'A';
+            ch = (ch - base + shift) % 26 + base;
+        }
+        outfile.put(ch);
+    }
+
+    infile.close();
+    outfile.close();
+}
+
+void decrypt_file(const string& filename, int shift) {
+    encrypt_file(filename, 26 - shift); // Decrypting with Caesar cipher is equivalent to encrypting with 26 - shift
+}
+
+int main() {
+    int choice, shift;
+    string filename;
+
+    do {
+        cout << "1. Encrypt file\n2. Decrypt file\n3. Exit\nEnter your choice: ";
+        cin >> choice;
+
+        if (choice == 1 || choice == 2) {
+            cout << "Enter filename: ";
+            cin >> filename;
+            cout << "Enter shift (1-25): ";
+            cin >> shift;
+            if (choice == 1) {
+                encrypt_file(filename, shift);
+            } else {
+                decrypt_file(filename, shift);
+            }
+        } else if (choice == 3) {
+            cout << "Exiting program." << endl;
+        } else {
+            cout << "Invalid choice, try again." << endl;
+        }
+    } while (choice != 3);
+
+    return 0;
+}

@@ -1,0 +1,33 @@
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+void copy_image(const string& source, const string& destination) {
+    ifstream src(source, ios::binary);
+    ofstream dest(destination, ios::binary);
+
+    if (!src || !dest) {
+        cerr << "Error opening files!" << endl;
+        return;
+    }
+
+    dest << src.rdbuf();
+
+    src.close();
+    dest.close();
+    cout << "Image copied successfully!" << endl;
+}
+
+int main() {
+    string source, destination;
+
+    cout << "Enter the source image file path: ";
+    cin >> source;
+    cout << "Enter the destination file path: ";
+    cin >> destination;
+
+    copy_image(source, destination);
+
+    return 0;
+}

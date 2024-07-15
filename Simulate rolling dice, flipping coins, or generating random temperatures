@@ -1,0 +1,50 @@
+#include <iostream>
+#include <random>
+#include <string>
+int rollDice(int sides) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(1, sides);
+    return dist(gen);
+}
+
+std::string flipCoin() {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(0, 1);
+    return dist(gen) == 0 ? "Heads" : "Tails";
+}
+
+double generateTemperature(double minTemp, double maxTemp) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dist(minTemp, maxTemp);
+    return dist(gen);
+}
+
+int main() {
+    int choice;
+    std::cout << "Choose an option:\n1. Roll Dice\n2. Flip Coin\n3. Generate Temperature\n";
+    std::cin >> choice;
+
+    if (choice == 1) {
+        int sides;
+        std::cout << "Enter the number of sides on the dice: ";
+        std::cin >> sides;
+        int result = rollDice(sides);
+        std::cout << "You rolled a " << result << std::endl;
+    } else if (choice == 2) {
+        std::string result = flipCoin();
+        std::cout << "The coin landed on " << result << std::endl;
+    } else if (choice == 3) {
+        double minTemp, maxTemp;
+        std::cout << "Enter the minimum temperature: ";
+        std::cin >> minTemp;
+        std::cout << "Enter the maximum temperature: ";
+        std::cin >> maxTemp;
+        double result = generateTemperature(minTemp, maxTemp);
+        std::cout << "The generated temperature is " << result << " degrees" << std::endl;
+    } else {
+        std::cerr << "Invalid choice" << std::endl;
+}
+}

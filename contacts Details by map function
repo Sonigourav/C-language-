@@ -1,0 +1,81 @@
+#include<iostream>
+#include<map>
+#include<string>
+
+using namespace std;
+
+int main(){
+    
+    std::map<string, pair<string, string>> contacts ;\
+    
+    int choice;
+    do{
+        
+        cout<<"\n contacts \n";
+        cout<<"1. Add Contacts\n";
+        cout<<"2. Search Contact\n";
+        cout<<"3. Display all\n";
+        cout<<"4. Exit\n";
+        cout<<"Enter choice : ";
+        cin>>choice;
+        
+        switch(choice){
+            case 1 : {
+                string name,phoneNumber, email;
+                cout<<"Enter Contact_Details : \n";
+                cout<<"Name : ";
+                cin.ignore();
+                getline(cin, name);
+                cout<<"phoneNumber : ";
+                getline(cin, phoneNumber);
+                cout<<"Email : ";
+                getline(cin, email);
+                
+                contacts[name] = make_pair(phoneNumber, email);
+                cout << "Contact added successfully!\n";
+                break;
+                
+            }
+            
+            case 2 : {
+                
+                string name;
+                cout<<"Enter the  name you want to search  : ";
+                cin.ignore();
+                getline(cin, name);
+                
+                auto it = contacts.find(name);
+                if(it != contacts.end()){
+                 cout << "Contact details:\n";
+                    cout << "Name: " << it->first << endl;
+                    cout << "Phone number: " << it->second.first << endl;
+                    cout << "Email address: " << it->second.second << endl;
+                } else {
+                    cout << "Contact not found.\n";
+                }
+                break;
+            }
+            case 3 : {
+                 if (contacts.empty()) {
+                    cout << "No contacts to display.\n";
+                } else {
+                    cout << "\nList of all contacts:\n";
+                    for (const auto& pair : contacts) {
+                        cout << "Name: " << pair.first << endl;
+                        cout << "Phone number: " << pair.second.first << endl;
+                        cout << "Email address: " << pair.second.second << endl;
+                        cout << "-----------------\n";
+                    }
+                }
+                break;
+                case 4:
+                cout << "Exiting program...\n";
+                break;
+            default:
+                cout << "Invalid choice. Please enter a number between 1 and 4.\n";
+            }
+        }
+    } while (choice != 4);
+
+    return 0;
+}

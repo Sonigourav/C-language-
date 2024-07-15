@@ -1,0 +1,62 @@
+#include <iostream>
+#include <fstream>
+#include <regex>
+#include <string>
+#include <stdexcept>
+
+class FileError : public std::runtime_error {
+public:
+    FileError(const std::string& message) : std::runtime_error(message) {}
+};
+
+void searchErrors(const std::string& inputFilePath, const std::string& outputFilePath, const std::regex& errorPattern) {
+    std::ifstream inputFile(inputFilePath);
+    if (!inputFile) {
+        throw FileError("Error opening input file: " + inputFilePath);
+    }
+
+    std::ofstream outputFile(outputFilePath);
+    if (!outputFile) {
+        throw FileError("Error opening output file: " + outputFilePath);
+    }
+
+    std::string line;
+    while (std::getline(inputFile, line)) {
+        try {
+            if (std::regex_search(line, errorPattern)) {
+                outputFile << line << std::endl;
+            }
+        } catch (const std::regex_error& e) {
+            throw std::runtime_error("Regex error: " + std::string(e.what()));
+        }
+    }
+
+    if (inputFile.bad()) {
+        throw FileError("Error reading from input file: " + inputFilePath);
+    }
+    if (outputFile.bad()) {
+        throw FileError("Error writing to output file: " + outputFilePath);
+    }
+
+    inputFile.close();
+    outputFile.close();
+}
+
+int main() {
+    try {
+        std::string inputFilePath = "log.txt";
+        std::string outputFilePath = "error_log.txt";
+        std::regex errorPattern(R"(ERROR:.*)");
+
+        searchErrors(inputFilePath, outputFilePath, errorPattern);
+        std::cout << "Error messages have been written to " << outputFilePath << std::endl;
+    } catch (const FileError& e) {
+        std::cerr << "File error: " << e.what() << std::endl;
+    } catch (const std::runtime_error& e) {
+        std::cerr << "Runtime error: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "An unexpected error occurred." << std::endl;
+    }
+
+    return 0;
+}

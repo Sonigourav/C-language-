@@ -1,0 +1,59 @@
+#include<iostream>
+#include<iterator>
+#include<map>
+using namespace std;
+
+int main(){
+    std::map<int, int> gquiz1 ;
+    
+    gquiz1.insert(pair<int, int>(1,40));
+    gquiz1.insert(pair<int, int>(2,70));
+    gquiz1.insert(pair<int, int>(3,60));
+    gquiz1.insert(pair<int, int>(4,50));
+    
+    std::map<int, int> :: iterator itr ;
+    std::cout << "\n the map quiz is : \n";
+    std::cout << "\tKEY\tELEMENT\n";
+    
+    for(itr = gquiz1.begin(); itr!=gquiz1.end(); ++itr){
+        std::cout << "\t" << itr->first << "\t"<<itr->second;
+    }
+    std::cout << std::endl;
+    
+    map<int ,int> gquiz2(gquiz1.begin(),gquiz1.end());
+    
+    std::cout << "\nThe map gquiz2 after "<< "of element less than key-3 : \n";
+        std::cout << "\tKEY\tELEMENT\n";
+          for(itr = gquiz2.begin(); itr!=gquiz2.end(); ++itr){
+        std::cout << "\t" << itr->first << "\t"<<itr->second;
+    }
+    std::cout << std::endl;
+    
+     std::cout << "\n gquiz2 after removal "<< "assign from gquiz1 : \n";
+        std::cout << "\tKEY\tELEMENT\n";
+        gquiz2.erase(gquiz2.begin(), gquiz2.find(3));
+          for(itr = gquiz2.begin(); itr!=gquiz2.end(); ++itr){
+        std::cout << "\t" << itr->first << "\t"<<itr->second;
+    }
+    std::cout << std::endl;
+    
+    int num;
+    
+    num= gquiz2.erase(4);
+    std::cout << "\ngquiz2.erase(4);";
+    cout<<num<<"\nremoved";
+    std::cout << "\tKEY\tELEMENT\n";
+     for(itr = gquiz2.begin(); itr!=gquiz2.end(); ++itr){
+        std::cout << "\t" << itr->first << "\t"<<itr->second;
+    }
+    std::cout << std::endl;
+    
+    cout<<"gquiz1.lower_bound(5) : "<<"\tKEY";
+    std::cout << gquiz1.lower_bound(5)->first <<"\t";
+    cout<<"\tELEMENT - "<<gquiz1.lower_bound(5)->second<<endl;
+    cout<<"gquiz1.upper_bound(5) : "<<"\tKEY";
+    std::cout << gquiz1.upper_bound(5)->first <<"\t";
+    cout<<"\tELEMENT - "<<gquiz1.upper_bound(5)->second<<endl;
+    
+    return 0;
+}

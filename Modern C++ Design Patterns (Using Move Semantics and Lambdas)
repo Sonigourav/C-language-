@@ -1,0 +1,86 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <memory>
+#include <functional> 
+
+class LargeObject {
+public:
+    LargeObject(size_t size, const std::string& name) : size_(size), name_(name) {
+        data_ = new int[size_];
+        std::cout << "Created LargeObject: " << name_ << " of size " << size_ << std::endl;
+    }
+
+    LargeObject(LargeObject&& other) noexcept : size_(other.size_), name_(std::move(other.name_)), data_(other.data_) {
+        other.data_ = nullptr;
+        other.size_ = 0;
+        std::cout << "Moved LargeObject: " << name_ << std::endl;
+    }
+
+    LargeObject& operator=(LargeObject&& other) noexcept {
+        if (this != &other) {
+            delete[] data_;
+            size_ = other.size_;
+            name_ = std::move(other.name_);
+            data_ = other.data_;
+            other.data_ = nullptr;
+            other.size_ = 0;
+            std::cout << "Move-assigned LargeObject: " << name_ << std::endl;
+        }
+        return *this;
+    }
+
+    const std::string& getName() const { return name_; }
+
+private:
+    size_t size_;
+    std::string name_;
+    int* data_;
+
+    LargeObject(const LargeObject&) = delete;
+    LargeObject& operator=(const LargeObject&) = delete;
+};
+
+class Container {
+public:
+    void addObject(LargeObject&& obj) {
+        objects_.emplace_back(std::move(obj));
+    }
+
+    void processObjects(const std::function<void(const LargeObject&)>& func) const {
+        for (const auto& obj : objects_) {
+            func(obj);
+        }
+    }
+
+    std::vector<LargeObject>::const_iterator begin() const { return objects_.begin(); }
+    std::vector<LargeObject>::const_iterator end() const { return objects_.end(); }
+
+private:
+    std::vector<LargeObject> objects_;
+};
+
+int main() {
+    Container container;
+
+    container.addObject(LargeObject(1000, "Object1"));
+    container.addObject(LargeObject(2000, "Object2"));
+    container.addObject(LargeObject(3000, "Object3"));
+
+    container.processObjects([](const LargeObject& obj) {
+        std::cout << "Processing " << obj.getName() << std::endl;
+    });
+
+    auto it = std::find_if(container.begin(), container.end(), [](const LargeObject& obj) {
+        return obj.getName() == "Object2";
+    });
+
+    if (it != container.end()) {
+        std::cout << "Found " << it->getName() << std::endl;
+    } else {
+        std::cout << "Object not found" << std::endl;
+    }
+
+    return 0;
+}

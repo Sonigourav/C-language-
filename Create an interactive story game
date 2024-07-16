@@ -1,0 +1,150 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Function prototypes
+void introduction();
+void step1();
+void step2();
+void step3();
+void step4();
+void step5();
+void goodEnding();
+void badEnding();
+
+int main() {
+    introduction();
+    step1();     
+    return 0;
+}
+
+void introduction() {
+    cout << "Welcome to the Game!\n";
+    cout << "Select choices . Let's begin...\n";
+    std::cout<< std::endl;
+}
+
+void step1() {
+    cout << "step 1: The Entrance\n";
+    cout << "two paths  select one of them.\n";
+    cout << "1. Take the left path.\n";
+    cout << "2. Take the right path.\n";
+
+    int choice;
+    cin >> choice;
+
+    switch (choice) {
+        case 1:
+            step2();
+            break;
+        case 2:
+            step3();
+            break;
+        default:
+            cout << "Invalid choice.\n";
+            step1();
+            break;
+    }
+}
+
+void step2() {
+    cout << "step 2: The Left Path\n";
+    cout << "You encounter a room.\n";
+    cout << "1. Take the gem.\n";
+    cout << "2. Leave it and explore further.\n";
+
+    int choice;
+    cin >> choice;
+
+    switch (choice) {
+        case 1:
+            badEnding(); 
+            break;
+        case 2:
+            step4();
+            break;
+        default:
+            cout << "Invalid choice.\n";
+            step2(); 
+            break;
+    }
+}
+
+void step3() {
+    cout << "step 3: The Right Path\n";
+    cout << "You find a room with lot's of coins.\n";
+    cout << "1. Take a coin.\n";
+    cout << "2. Explore another path.\n";
+
+    int choice;
+    cin >> choice;
+
+    switch (choice) {
+        case 1:
+            step5();
+            break;
+        case 2:
+            badEnding();
+            break;
+        default:
+            cout << "Invalid choice.\n";
+            step3();
+            break;
+    }
+}
+
+void step4() {
+    cout << "step 4: finding something \n";
+    cout << "You find a hidden door.\n";
+    cout << "1. Enter the hidden door.\n";
+    cout << "2. Return to the main path.\n";
+
+    int choice;
+    cin >> choice;
+
+    switch (choice) {
+        case 1:
+            step5();
+            break;
+        case 2:
+            badEnding();
+            break;
+        default:
+            cout << "Invalid choice.\n";
+            step4();
+            break;
+    }
+}
+
+void step5() {
+    cout << "step 5: You take a coin\n";
+    cout << "You reach the final step.\n";
+    cout << "1. Take coins and Win.\n";
+    cout << "2. Find more Coins .\n";
+
+    int choice;
+    cin >> choice;
+
+    switch (choice) {
+        case 1:
+            goodEnding();
+            break;
+        case 2:
+            badEnding();
+            break;
+        default:
+            cout << "Invalid choice.\n";
+            step5();
+            break;
+    }
+}
+
+void goodEnding() {
+    cout << "Congratulations!\n";
+    cout << "You Win.\n";
+}
+
+void badEnding() {
+    cout << "Sorry try next time.\n";
+    cout << "You Lose.\n";
+}

@@ -1,45 +1,40 @@
 #include <iostream>
 #include <fstream>
-#include <string>
 #include <stdexcept>
-#include <exception>
+#include <string>
+
+void readFile(const std::string& filename) {
+    std::ifstream file(filename);
+
+    if (!file.is_open()) {
+        throw std::runtime_error("File not found");
+    }
+
+    std::string line;
+    while (std::getline(file, line)) {
+        try {
+            // Assuming we expect the line to be an integer
+            int value = std::stoi(line);
+            std::cout << "Read value: " << value << std::endl;
+        } catch (const std::invalid_argument&) {
+            std::cerr << "Invalid data format: " << line << std::endl;
+        } catch (const std::out_of_range&) {
+            std::cerr << "Data out of range: " << line << std::endl;
+        }
+    }
+
+    if (file.bad()) {
+        throw std::runtime_error("Error reading file");
+    }
+
+    file.close();
+}
 
 int main() {
-    std::ifstream inputFile;
-    std::string filename = "data.txt";
-    
     try {
-        inputFile.open(filename);
-        if (!inputFile.is_open()) {
-            throw std::ios_base::failure("File not found or could not be opened");
-        }
-
-        std::string line;
-        while (std::getline(inputFile, line)) {
-            try {
-                
-                if (line.empty()) {
-                    throw std::runtime_error("Unexpected empty line in file");
-                }
-
-                
-                int number = std::stoi(line);  
-                std::cout << "Read number: " << number << std::endl;
-
-            } catch (const std::invalid_argument& e) {
-                std::cerr << "Invalid data format: " << e.what() << " in line: " << line << std::endl;
-            } catch (const std::out_of_range& e) {
-                std::cerr << "Data out of range: " << e.what() << " in line: " << line << std::endl;
-            } catch (const std::exception& e) {
-                std::cerr << "Error processing line: " << e.what() << " in line: " << line << std::endl;
-            }
-        }
-        inputFile.close();
-
-    } catch (const std::ios_base::failure& e) {
-        std::cerr << "File I/O error: " << e.what() << std::endl;
+        readFile("data.txt");
     } catch (const std::exception& e) {
-        std::cerr << "Unexpected error: " << e.what() << std::endl;
+        std::cerr << "An error occurred: " << e.what() << std::endl;
     }
 
     return 0;

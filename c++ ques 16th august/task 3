@@ -1,0 +1,46 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <stdexcept>
+#include <exception>
+
+int main() {
+    std::ifstream inputFile;
+    std::string filename = "data.txt";
+    
+    try {
+        inputFile.open(filename);
+        if (!inputFile.is_open()) {
+            throw std::ios_base::failure("File not found or could not be opened");
+        }
+
+        std::string line;
+        while (std::getline(inputFile, line)) {
+            try {
+                
+                if (line.empty()) {
+                    throw std::runtime_error("Unexpected empty line in file");
+                }
+
+                
+                int number = std::stoi(line);  
+                std::cout << "Read number: " << number << std::endl;
+
+            } catch (const std::invalid_argument& e) {
+                std::cerr << "Invalid data format: " << e.what() << " in line: " << line << std::endl;
+            } catch (const std::out_of_range& e) {
+                std::cerr << "Data out of range: " << e.what() << " in line: " << line << std::endl;
+            } catch (const std::exception& e) {
+                std::cerr << "Error processing line: " << e.what() << " in line: " << line << std::endl;
+            }
+        }
+        inputFile.close();
+
+    } catch (const std::ios_base::failure& e) {
+        std::cerr << "File I/O error: " << e.what() << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Unexpected error: " << e.what() << std::endl;
+    }
+
+    return 0;
+}

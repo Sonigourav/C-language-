@@ -1,0 +1,124 @@
+#include <iostream>
+#include <stdexcept>
+using namespace std;
+class DArray {
+public:
+    DArray();
+    
+    void insert(int element);
+    void remove(int element);
+    void clear();
+    int size() const;
+    int capacity() const;
+    const int& operator[](int index) const;
+
+private:
+    void resize(int new_capacity);
+
+    int* data;
+    int s;
+    int cap;
+};
+
+DArray::DArray() : s(0), cap(1) {
+    data = new int[cap];
+}
+
+
+
+void DArray::insert(int element) {
+    if (s >= cap) {
+        resize(2 * cap);
+    }
+    data[s++] = element;
+}
+
+void DArray::remove(int element) {
+    int i;
+    int f = 0;
+    for (i = 0; i < s; ++i) {
+        if (data[i] == element) {
+            break;
+        }
+    }
+    
+    if (i == s) {
+        cout<<"Element Not Found "<<endl;
+        return ;
+    }
+    
+    for (int j = i; j < s - 1; ++j) {
+        data[j] = data[j + 1];
+    }
+    
+    --s;
+
+    if (s <= cap / 4 && cap > 1) {
+        resize(cap / 2);
+    }
+}
+
+void DArray::clear() {
+    s = 0;
+    resize(1);
+}
+
+int DArray::size() const {
+    return s;
+}
+
+int DArray::capacity() const {
+    return cap;
+}
+
+
+const int& DArray::operator[](int index) const {
+    if (index < 0 || index >= s) {
+        throw std::out_of_range("Index out of bounds");
+    }
+    return data[index];
+}
+
+void DArray::resize(int new_cap) {
+    if (new_cap < 1) {
+        new_cap = 1;
+    }
+
+    int* new_data = new int[new_cap];
+    for (int i = 0; i < s; ++i) {
+        new_data[i] = data[i];
+    }
+
+    delete[] data;
+    data = new_data;
+    cap = new_cap;
+}
+
+int main() {
+    DArray arr;
+
+    arr.insert(10);
+    arr.insert(20);
+    arr.insert(30);
+
+    cout << "Array contents: ";
+    for (int i = 0; i < arr.size(); ++i) {
+        cout << arr[i] << " ";
+    }
+    cout <<endl;
+    int n;
+    cout<<"enter the element you want to remove : ";
+    cin>>n;
+    arr.remove(n);
+    cout << "Array after removing "<< n << " : ";
+    for (int i = 0; i < arr.size(); ++i) {
+        std::cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    arr.clear();
+    cout << "Array size after clearing: " << arr.size() << endl;
+    cout << "Array capacity after clearing: " << arr.capacity() << endl;
+
+    return 0;
+}
